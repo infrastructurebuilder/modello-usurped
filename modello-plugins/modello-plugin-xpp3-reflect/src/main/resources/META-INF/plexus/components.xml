@@ -1,0 +1,16 @@
+<component-set>
+  <components>
+    <component>
+      <role>org.codehaus.modello.plugin.ModelloGenerator</role>
+      <role-hint>xpp3-writer-reflect</role-hint>
+      <implementation>org.codehaus.modello.plugin.xpp3.ReflectingXpp3WriterGenerator</implementation>
+      <instantiation-strategy>per-lookup</instantiation-strategy>
+    </component>
+    <component>
+      <role>org.codehaus.modello.plugin.ModelloGenerator</role>
+      <role-hint>xpp3-extended-writer-reflect</role-hint>
+      <implementation>org.codehaus.modello.plugin.xpp3.ReflectingXpp3ExtendedWriterGenerator</implementation>
+      <instantiation-strategy>per-lookup</instantiation-strategy>
+    </component>
+  </components>
+</component-set>
