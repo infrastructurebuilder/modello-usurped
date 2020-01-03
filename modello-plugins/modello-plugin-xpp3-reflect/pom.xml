@@ -58,7 +58,7 @@
   </description>
 
   <properties>
-    <test.coverage.percentage.required>70</test.coverage.percentage.required>
+    <test.coverage.percentage.required>60</test.coverage.percentage.required>
   </properties>
   <dependencies>
     <dependency>

@@ -71,7 +71,7 @@ import java.util.Properties;
 public class ReflectingXpp3WriterGenerator extends AbstractXpp3Generator {
   private static final String GET_REFLECTOR_PREFIX = "getReflectedValueOf";
   private String extendedClassnameSuffix;
-  private Map<String,JMethod> listOfAddedMethods = new HashMap<>();
+  private Map<String, JMethod> listOfAddedMethods = new HashMap<>();
 
   protected void prepareLocationTracking(JClass jClass) {
     // NO OP
@@ -122,6 +122,7 @@ public class ReflectingXpp3WriterGenerator extends AbstractXpp3Generator {
     jClass.addImport("java.io.Writer");
     jClass.addImport("java.io.IOException");
     jClass.addImport("java.util.Iterator");
+    jClass.addImport("java.util.Date");
     jClass.addImport("java.lang.reflect.Field");
 
     JField namespaceField = new JField(new JClass("String"), "NAMESPACE");
@@ -332,17 +333,22 @@ public class ReflectingXpp3WriterGenerator extends AbstractXpp3Generator {
 
       String fieldTagName = resolveTagName(field, xmlFieldMetadata);
 
-      String varName = "_"+fieldTagName;
+      String varName = "_" + fieldTagName;
 
       String type = field.getType();
+      String realType = type;
 
       String value = uncapClassName + "." + getPrefix(javaFieldMetadata) + capitalise(field.getName()) + "()";
       String reflectValue = getReflectorForField(className, uncapClassName, field.getName());
       boolean requiredReflection = !javaFieldMetadata.isGetter();
 
       if (requiredReflection) {
+        if ("DOM".equals(field.getType())) {
+          realType = "Xpp3Dom";
+        }
+
         listOfAddedMethods.put(className, getReflectingWriter(className));
-        sc.add(type + " " + varName + " = (" + type + ") " + reflectValue + ";");
+        sc.add(realType + " " + varName + " = (" + realType + ") " + reflectValue + ";");
         value = varName;
       }
       if (xmlFieldMetadata.isAttribute()) {
@@ -558,9 +564,8 @@ public class ReflectingXpp3WriterGenerator extends AbstractXpp3Generator {
     jClass.addMethod(method);
   }
 
-
   private String getReflectorForField(String modelClass, String model, String field) {
-    return GET_REFLECTOR_PREFIX + modelClass + "Field("+ model + ",\"" + field + "\")" ;
+    return GET_REFLECTOR_PREFIX + modelClass + "Field(" + model + ",\"" + field + "\")";
   }
 
   private String getReflectingWriterName(String modelClass) {
@@ -568,7 +573,8 @@ public class ReflectingXpp3WriterGenerator extends AbstractXpp3Generator {
   }
 
   private JMethod getReflectingWriter(String modelClass) {
-    JMethod fetch = new JMethod(getReflectingWriterName(modelClass),new JType("Object"), "Returns possibly null reflected value");
+    JMethod fetch = new JMethod(getReflectingWriterName(modelClass), new JType("Object"),
+        "Returns possibly null reflected value");
     fetch.addParameter(new JParameter(new JType(modelClass), "source"));
     fetch.addParameter(new JParameter(new JType("String"), "field"));
     fetch.addException(new JClass("IOException"));
@@ -578,7 +584,8 @@ public class ReflectingXpp3WriterGenerator extends AbstractXpp3Generator {
     sc.addIndented("Field privateField = " + modelClass + ".class.getDeclaredField(field);");
     sc.add("privateField.setAccessible(true);");
     sc.add("return privateField.get(source);");
-    sc.add("} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {");
+    sc.add(
+        "} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {");
     sc.unindent();
     sc.add("throw new IOException(\"Reflection failure\", e);");
     sc.add("}");
