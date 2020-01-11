@@ -227,6 +227,7 @@ public class ReflectingXpp3WriterGenerator extends AbstractXpp3Generator {
     jClass.print(sourceWriter);
 
     sourceWriter.close();
+    listOfAddedMethods.clear();
   }
 
   private void writeAllClasses(Model objectModel, JClass jClass) throws ModelloException {
