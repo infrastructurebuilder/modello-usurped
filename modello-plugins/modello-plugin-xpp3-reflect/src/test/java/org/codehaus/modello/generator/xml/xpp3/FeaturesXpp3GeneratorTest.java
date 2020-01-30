@@ -15,6 +15,8 @@
  */
 package org.codehaus.modello.generator.xml.xpp3;
 
+import java.util.Properties;
+
 /*
  * Copyright (c) 2004, Codehaus.org
  *
@@ -40,8 +42,6 @@ package org.codehaus.modello.generator.xml.xpp3;
 import org.codehaus.modello.AbstractModelloJavaGeneratorTest;
 import org.codehaus.modello.core.ModelloCore;
 import org.codehaus.modello.model.Model;
-
-import java.util.Properties;
 
 /**
  * @author Hervé Boutemy

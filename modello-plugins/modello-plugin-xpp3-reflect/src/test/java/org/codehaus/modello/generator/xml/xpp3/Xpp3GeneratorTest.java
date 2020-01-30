@@ -15,6 +15,9 @@
  */
 package org.codehaus.modello.generator.xml.xpp3;
 
+import java.util.List;
+import java.util.Properties;
+
 /*
  * Copyright (c) 2004, Codehaus.org
  *
@@ -44,9 +47,6 @@ import org.codehaus.modello.model.ModelClass;
 import org.codehaus.modello.model.ModelField;
 import org.codehaus.modello.model.Version;
 import org.codehaus.modello.plugins.xml.metadata.XmlFieldMetadata;
-
-import java.util.List;
-import java.util.Properties;
 
 /**
  * @author <a href="mailto:trygvis@inamo.no">Trygve Laugst&oslash;l</a>

@@ -15,6 +15,12 @@
  */
 package org.codehaus.modello.plugin.xpp3;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
 /*
  * Copyright (c) 2004, Codehaus.org
  *
@@ -56,13 +62,6 @@ import org.codehaus.modello.plugin.model.ModelClassMetadata;
 import org.codehaus.modello.plugins.xml.metadata.XmlAssociationMetadata;
 import org.codehaus.modello.plugins.xml.metadata.XmlFieldMetadata;
 import org.codehaus.modello.plugins.xml.metadata.XmlModelMetadata;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 
 /**
  * @author <a href="mailto:jason@modello.org">Jason van Zyl </a>
