@@ -10,7 +10,7 @@
   <groupId>org.infrastructurebuilder.modello</groupId>
   <artifactId>modello-usurped</artifactId>
   <packaging>pom</packaging>
-  <version>1.11.0.0</version>
+  <version>1.11.0.1-SNAPSHOT</version>
   <name>${project.artifactId}</name>
   <description>
 	  Usurped Modello plugin, generally depending on the existing plugin tree to work properly.
@@ -26,7 +26,7 @@
     <connection>scm:git:${git.url}</connection>
     <url>scm:git:${git.url}</url>
     <developerConnection>scm:git:${git.url}</developerConnection>
-    <tag>modello-usurped-1.11.0.0</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <dependencyManagement>
