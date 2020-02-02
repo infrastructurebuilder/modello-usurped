@@ -5,7 +5,7 @@
   <parent>
     <artifactId>ibparent</artifactId>
     <groupId>org.infrastructurebuilder</groupId>
-    <version>28</version>
+    <version>20</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
@@ -23,6 +23,13 @@
     A given version of this code will be based on some version of modello with some additional 4th number like ".0" appended to the version.
 
   </description>
+
+  <scm>
+    <connection>scm:git:${git.url}</connection>
+    <url>scm:git:${git.url}</url>
+    <developerConnection>scm:git:${git.url}</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
 
   <dependencyManagement>
     <dependencies>
