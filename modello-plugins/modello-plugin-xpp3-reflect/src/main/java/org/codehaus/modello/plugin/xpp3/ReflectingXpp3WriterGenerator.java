@@ -298,6 +298,10 @@ public class ReflectingXpp3WriterGenerator extends AbstractXpp3Generator {
 
       String value = uncapClassName + "." + getPrefix(javaFieldMetadata) + capitalise(field.getName()) + "()";
 
+      String reflectValue = getReflectorForField(className, uncapClassName, field.getName());
+      boolean requiredReflection = !javaFieldMetadata.isGetter();
+
+
       if (xmlFieldMetadata.isContent()) {
         contentField = field;
         contentValue = value;
@@ -305,7 +309,19 @@ public class ReflectingXpp3WriterGenerator extends AbstractXpp3Generator {
       }
 
       if (xmlFieldMetadata.isAttribute()) {
+
+        if (requiredReflection) {
+          listOfAddedMethods.put(className, getReflectingWriter(className));
+          String varName = "_" + fieldTagName;
+
+          String realType = type;
+
+          sc.add(realType + " " + varName + " = (" + realType + ") " + reflectValue + ";");
+          value = varName;
+        }
+
         sc.add(getValueChecker(type, value, field));
+
 
         sc.add("{");
         sc.addIndented("serializer.attribute( NAMESPACE, \"" + fieldTagName + "\", "
@@ -342,6 +358,9 @@ public class ReflectingXpp3WriterGenerator extends AbstractXpp3Generator {
       String reflectValue = getReflectorForField(className, uncapClassName, field.getName());
       boolean requiredReflection = !javaFieldMetadata.isGetter();
 
+      if (xmlFieldMetadata.isAttribute()) {
+        continue;
+      }
       if (requiredReflection) {
         if ("DOM".equals(field.getType())) {
           realType = "Xpp3Dom";
@@ -350,9 +369,6 @@ public class ReflectingXpp3WriterGenerator extends AbstractXpp3Generator {
         listOfAddedMethods.put(className, getReflectingWriter(className));
         sc.add(realType + " " + varName + " = (" + realType + ") " + reflectValue + ";");
         value = varName;
-      }
-      if (xmlFieldMetadata.isAttribute()) {
-        continue;
       }
 
       if (field instanceof ModelAssociation) {
