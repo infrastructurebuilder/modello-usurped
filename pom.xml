@@ -3,7 +3,7 @@
   <parent>
     <artifactId>ibparent</artifactId>
     <groupId>org.infrastructurebuilder</groupId>
-    <version>29</version>
+    <version>39</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
